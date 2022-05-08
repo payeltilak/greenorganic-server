@@ -31,8 +31,7 @@ async function run() {
             const query = {};
             const inventories = await inventoryCollection.find(query).toArray();
             console.log(inventories);
-          
-            res.send(inventories)
+             res.send(inventories)
         });
         app.get('/inventories/:id', async(req,res)=>{
             const id=req.params.id;
@@ -46,6 +45,7 @@ async function run() {
             const result=await inventoryCollection.insertOne(newItem)
             res.send(result)
         })
+        
 
     }
     finally {
