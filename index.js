@@ -50,10 +50,24 @@ async function run() {
         app.delete('/inventories/:id', async (req, res) => {
             const id = req.params.id;
             const qrl = { _id: ObjectId(id) };
-            const result = await inventoryCollection.deleteOne(query);
+            const result = await inventoryCollection.deleteOne(qrl);
             res.send(result);
         })
-        
+        //
+        app.put('/update-inventories/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedInventoriesInfo = req.body;
+          
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updatedDoc = {
+                $set: {
+                    quantity: updatedInventoriesInfo.quantity,
+
+                }
+            }
+            const result = await inventoryCollection.updateOne(filter, updatedDoc, options);
+        });
 
     }
     finally {
