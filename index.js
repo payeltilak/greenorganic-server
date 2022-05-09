@@ -5,6 +5,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const res = require('express/lib/response');
+const { query } = require('express');
 
 // use middleware
 app.use(cors())
@@ -44,6 +45,13 @@ async function run() {
             const newItem=req.body;
             const result=await inventoryCollection.insertOne(newItem)
             res.send(result)
+        })
+        //DELETE
+        app.delete('/inventories/:id', async (req, res) => {
+            const id = req.params.id;
+            const qrl = { _id: ObjectId(id) };
+            const result = await inventoryCollection.deleteOne(query);
+            res.send(result);
         })
         
 
